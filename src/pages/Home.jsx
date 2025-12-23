@@ -120,7 +120,8 @@ const Home = () => {
       </section>
 
       {/* Available Loans */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
+      {/* Available Loans */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -128,40 +129,92 @@ const Home = () => {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
+            <div className="inline-block px-4 py-2 bg-primary-100 dark:bg-primary-900 rounded-full mb-4">
+              <span className="text-primary-600 dark:text-primary-400 font-semibold">
+                Featured Loans
+              </span>
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-              Available Loans
+              Popular Loan Options
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Choose from our diverse range of loan products designed to meet your
-              specific financial needs
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
+              Browse our most popular loan products with competitive rates and flexible terms
             </p>
           </motion.div>
 
           {loans.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {loans.map((loan, index) => (
-                <motion.div
-                  key={loan._id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <LoanCard loan={loan} />
-                </motion.div>
-              ))}
+            <div className="relative">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {loans.map((loan, index) => (
+                  <motion.div
+                    key={loan._id}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                      delay: index * 0.1,
+                      type: "spring",
+                      stiffness: 100 
+                    }}
+                    className="h-full"
+                  >
+                    <div className="card h-full border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-500 hover:shadow-xl transition-all duration-300">
+                      <LoanCard loan={loan} />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute -top-10 -left-10 w-20 h-20 bg-blue-100 dark:bg-blue-900 rounded-full blur-3xl opacity-50"></div>
+              <div className="absolute -bottom-10 -right-10 w-20 h-20 bg-purple-100 dark:bg-purple-900 rounded-full blur-3xl opacity-50"></div>
             </div>
           ) : (
-            <p className="text-center text-gray-600 dark:text-gray-400">
-              No featured loans available at the moment.
-            </p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-12"
+            >
+              <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl p-8 max-w-md mx-auto">
+                <FiDollarSign className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold mb-2 text-gray-700 dark:text-gray-300">
+                  No Featured Loans Available
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                  Check back soon for new loan opportunities
+                </p>
+                <Link 
+                  to="/loans" 
+                  className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 font-semibold hover:gap-3 transition-all"
+                >
+                  Browse All Loans
+                  <span>→</span>
+                </Link>
+              </div>
+            </motion.div>
           )}
 
-          <div className="text-center mt-12">
-            <Link to="/loans" className="btn-primary">
-              View All Loans
-            </Link>
-          </div>
+          {loans.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mt-16"
+            >
+              <Link 
+                to="/loans" 
+                className="group inline-flex items-center gap-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-200 dark:hover:shadow-primary-900 transition-all duration-300"
+              >
+                <span>Explore All Loan Options</span>
+                <span className="group-hover:translate-x-1 transition-transform">
+                  →
+                </span>
+              </Link>
+              <p className="mt-4 text-gray-600 dark:text-gray-400 text-sm">
+                Competitive rates starting from 5.99% APR
+              </p>
+            </motion.div>
+          )}
         </div>
       </section>
 

@@ -1,1 +1,31 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary-600: #2563eb;
+  /* Add other colors... */
+}
+
+/* Use @custom-variant for dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+  @apply bg-white text-gray-900;
+}
+
+@variant dark {
+  body {
+    @apply bg-gray-900 text-gray-100;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-700 hover:bg-gray-600 text-gray-200;
+  }
+  
+  .input-field {
+    @apply border-gray-600 bg-gray-800 text-gray-100;
+  }
+  
+  .card {
+    @apply bg-gray-800;
+  }
+}

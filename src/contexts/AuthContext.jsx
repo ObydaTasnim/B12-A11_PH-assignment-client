@@ -116,26 +116,29 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          const response = await api.get('/auth/me');
-          if (response.data.success) {
-            setUser(response.data.user);
-          }
-        } catch (error) {
-          console.error('Auth check error:', error);
-          setUser(null);
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    if (firebaseUser) {
+      try {
+        const response = await api.get('/auth/me');
+        if (response.data.success) {
+          setUser(response.data.user);
         }
-      } else {
+      } catch (error) {
+        // Don't log error if it's just a 401 (not logged in)
+        if (error.response?.status !== 401) {
+          console.error('Auth check error:', error);
+        }
         setUser(null);
       }
-      setLoading(false);
-    });
+    } else {
+      setUser(null);
+    }
+    setLoading(false);
+  });
 
-    return unsubscribe;
-  }, []);
+  return unsubscribe;
+}, []);
 
   const value = {
     user,

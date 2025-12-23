@@ -22,7 +22,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    // Only redirect to login if we get 401 on a non-auth-check request
+    if (error.response?.status === 401 && !error.config.url.includes('/auth/me')) {
       Cookies.remove('token');
       window.location.href = '/login';
     }

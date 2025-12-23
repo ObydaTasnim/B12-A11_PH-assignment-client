@@ -1,3 +1,5 @@
+import { Navigate } from 'react-router-dom';
+import { useAuth } from './contexts/AuthContext';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -69,6 +71,14 @@ function App() {
                 {/* Borrower Routes */}
                 <Route path="/dashboard/my-loans" element={<BorrowerRoute><MyLoans /></BorrowerRoute>} />
                 <Route path="/dashboard/my-profile" element={<BorrowerRoute><BorrowerProfile /></BorrowerRoute>} />
+                <Route 
+  path="/dashboard" 
+  element={
+    <PrivateRoute>
+      <DashboardRedirect />
+    </PrivateRoute>
+  } 
+/>
 
                 <Route path="*" element={<NotFound />} />
               </Routes>
@@ -80,6 +90,23 @@ function App() {
       </ThemeProvider>
     </BrowserRouter>
   );
+}
+
+function DashboardRedirect() {
+  const { user } = useAuth();
+  
+  if (!user) return null;
+  
+  switch (user.role) {
+    case 'admin':
+      return <Navigate to="/dashboard/manage-users" replace />;
+    case 'manager':
+      return <Navigate to="/dashboard/add-loan" replace />;
+    case 'borrower':
+      return <Navigate to="/dashboard/my-loans" replace />;
+    default:
+      return <Navigate to="/" replace />;
+  }
 }
 
 export default App;
