@@ -99,7 +99,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center gap-3">
                 <FiMapPin className="text-primary-500" />
-                <span>123 Finance Street, City, Country</span>
+                <span>Jatrabari, Dhaka</span>
               </li>
               <li className="flex items-center gap-3">
                 <FiPhone className="text-primary-500" />
