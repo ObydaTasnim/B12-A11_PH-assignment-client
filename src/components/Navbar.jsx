@@ -1,9 +1,9 @@
-import { Link, NavLink } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import ThemeToggle from './ThemeToggle';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX, FiUser, FiChevronDown } from 'react-icons/fi';
-import { useState } from 'react';
+import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import ThemeToggle from "./ThemeToggle";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiMenu, FiX, FiUser, FiChevronDown } from "react-icons/fi";
+import { useState } from "react";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -11,34 +11,34 @@ const Navbar = () => {
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
 
   const publicLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/loans', label: 'All Loans' },
-    { path: '/about', label: 'About Us' },
-    { path: '/contact', label: 'Contact' }
+    { path: "/", label: "Home" },
+    { path: "/loans", label: "All Loans" },
+    { path: "/about", label: "About Us" },
+    { path: "/contact", label: "Contact" },
   ];
 
   const getDashboardLinks = () => {
     if (!user) return [];
 
     switch (user.role) {
-      case 'admin':
+      case "admin":
         return [
-          { path: '/dashboard/manage-users', label: 'Manage Users' },
-          { path: '/dashboard/all-loan', label: 'All Loans' },
-          { path: '/dashboard/loan-applications', label: 'Applications' }
+          { path: "/dashboard/manage-users", label: "Manage Users" },
+          { path: "/dashboard/all-loan", label: "All Loans" },
+          { path: "/dashboard/loan-applications", label: "Applications" },
         ];
-      case 'manager':
+      case "manager":
         return [
-          { path: '/dashboard/add-loan', label: 'Add Loan' },
-          { path: '/dashboard/manage-loans', label: 'Manage Loans' },
-          { path: '/dashboard/pending-loans', label: 'Pending Applications' },
-          { path: '/dashboard/approved-loans', label: 'Approved Applications' },
-          { path: '/dashboard/profile', label: 'Profile' }
+          { path: "/dashboard/add-loan", label: "Add Loan" },
+          { path: "/dashboard/manage-loans", label: "Manage Loans" },
+          { path: "/dashboard/pending-loans", label: "Pending Applications" },
+          { path: "/dashboard/approved-loans", label: "Approved Applications" },
+          { path: "/dashboard/profile", label: "Profile" },
         ];
-      case 'borrower':
+      case "borrower":
         return [
-          { path: '/dashboard/my-loans', label: 'My Applications' },
-          { path: '/dashboard/my-profile', label: 'Profile' }
+          { path: "/dashboard/my-loans", label: "My Applications" },
+          { path: "/dashboard/my-profile", label: "Profile" },
         ];
       default:
         return [];
@@ -67,8 +67,8 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `font-medium transition-colors ${
                   isActive
-                    ? 'text-primary-600'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-primary-600'
+                    ? "text-primary-600"
+                    : "text-gray-700 dark:text-gray-300 hover:text-primary-600"
                 }`
               }
             >
@@ -79,8 +79,8 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `font-medium transition-colors ${
                   isActive
-                    ? 'text-primary-600'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-primary-600'
+                    ? "text-primary-600"
+                    : "text-gray-700 dark:text-gray-300 hover:text-primary-600"
                 }`
               }
             >
@@ -94,8 +94,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `font-medium transition-colors ${
                       isActive
-                        ? 'text-primary-600'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-primary-600'
+                        ? "text-primary-600"
+                        : "text-gray-700 dark:text-gray-300 hover:text-primary-600"
                     }`
                   }
                 >
@@ -106,8 +106,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `font-medium transition-colors ${
                       isActive
-                        ? 'text-primary-600'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-primary-600'
+                        ? "text-primary-600"
+                        : "text-gray-700 dark:text-gray-300 hover:text-primary-600"
                     }`
                   }
                 >
@@ -120,11 +120,17 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsDashboardOpen(!isDashboardOpen)}
-                  onBlur={() => setTimeout(() => setIsDashboardOpen(false), 200)}
+                  onBlur={() =>
+                    setTimeout(() => setIsDashboardOpen(false), 200)
+                  }
                   className="font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 transition-colors flex items-center gap-1"
                 >
                   Dashboard
-                  <FiChevronDown className={`transition-transform ${isDashboardOpen ? 'rotate-180' : ''}`} />
+                  <FiChevronDown
+                    className={`transition-transform ${
+                      isDashboardOpen ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
 
                 <AnimatePresence>
@@ -177,15 +183,11 @@ const Navbar = () => {
                     </span>
                   </div>
                 </div>
-                <button onClick={logout} className="btn-secondary">
-                  Logout
-                </button>
+                <button onClick={logout}>Logout</button>
               </div>
             ) : (
               <>
-                <Link to="/login" className="btn-secondary">
-                  Login
-                </Link>
+                <Link to="/login">Login</Link>
                 <Link to="/register" className="btn-primary">
                   Register
                 </Link>
@@ -206,7 +208,7 @@ const Navbar = () => {
         {isMenuOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
+            animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             className="md:hidden pb-4"
           >
@@ -217,8 +219,8 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `font-medium transition-colors ${
                     isActive
-                      ? 'text-primary-600'
-                      : 'text-gray-700 dark:text-gray-300'
+                      ? "text-primary-600"
+                      : "text-gray-700 dark:text-gray-300"
                   }`
                 }
               >
@@ -230,8 +232,8 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   `font-medium transition-colors ${
                     isActive
-                      ? 'text-primary-600'
-                      : 'text-gray-700 dark:text-gray-300'
+                      ? "text-primary-600"
+                      : "text-gray-700 dark:text-gray-300"
                   }`
                 }
               >
@@ -246,8 +248,8 @@ const Navbar = () => {
                     className={({ isActive }) =>
                       `font-medium transition-colors ${
                         isActive
-                          ? 'text-primary-600'
-                          : 'text-gray-700 dark:text-gray-300'
+                          ? "text-primary-600"
+                          : "text-gray-700 dark:text-gray-300"
                       }`
                     }
                   >
@@ -259,8 +261,8 @@ const Navbar = () => {
                     className={({ isActive }) =>
                       `font-medium transition-colors ${
                         isActive
-                          ? 'text-primary-600'
-                          : 'text-gray-700 dark:text-gray-300'
+                          ? "text-primary-600"
+                          : "text-gray-700 dark:text-gray-300"
                       }`
                     }
                   >
