@@ -26,6 +26,7 @@ const Navbar = () => {
           { path: "/dashboard/manage-users", label: "Manage Users" },
           { path: "/dashboard/all-loan", label: "All Loans" },
           { path: "/dashboard/loan-applications", label: "Applications" },
+          { path: "/dashboard/admin-profile", label: "Profile" },
         ];
       case "manager":
         return [
